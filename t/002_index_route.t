@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 # the order is important
-use ExplorationAfterlife;
+use Exploration::Afterlife;
 use Dancer::Test;
 
 route_exists [GET => '/'], 'a route handler is defined for /';

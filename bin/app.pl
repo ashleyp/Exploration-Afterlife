@@ -1,4 +1,4 @@
 #!/usr/bin/env perl
 use Dancer;
-use ExplorationAfterlife;
+use Exploration::Afterlife;
 dance;
