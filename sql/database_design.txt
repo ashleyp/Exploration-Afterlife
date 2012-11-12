@@ -1,0 +1,32 @@
+
+                                                                  -.-.-,~ .   
+                                                                  )     (     
+                                          .-------------------.   |_    |     
+                                          |      Article      |   /(_)---`\   
+          .---------------.               |-------------------|  (_      -'   
+          |   Category    |               | article_id        |   ]      |    
+          |---------------|               | content           |   |    _,')   
+          | category_id   |<--------------| title             |   [_,-'_-'(   
+          | category_name |               | category_id       |  (_).-'    \  
+          '---------------'               | date_posted       |  / /        \ 
+                                          | posted_by_user_id |
+                                          '-------------------'
+                                                    |
+                                                    |
+                                                    v
+                                               .------------.
+                                               |   Users    |
+              .-----------------.              |------------|
+              |    UserLevel    |              | user_id    |
+              |-----------------|              | user_level |
+              | user_level_id   |<-------------| username   |
+              | user_level_name |              | password   |
+              '-----------------'              | lastname   |
+                                               | firstname  |
+                                               | email      |
+                                               '------------'
+
+
+                                                                        (\_/)
+                                                                        (O.o)
+                                                                        (> <)

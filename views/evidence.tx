@@ -1,0 +1,32 @@
+<div id="page">
+      <div id="sidebar">
+        <ul id="sidebar-items">
+          <li>
+            <h3>Categories</h3>
+            <ul class="links">
+              [% FOREACH category in categories %]
+                  [% SET category_name = category.category_name %]
+                  <li><a href="/evidence/category/[% category_name %]">[% category_name %]</a></li>
+              [% END %]
+            </ul>
+          </li>
+      </div>
+
+      <div id="content">
+        <div id="header">
+          <h1>Exploration Afterlife - <a href="/" style="color: black">Home</a> - <a href="/evidence" style="color: black">Evidence</a></h1>
+          <h2></h2>
+        </div>
+
+          <ol>          
+              [% FOREACH article IN articles %]
+                <li>
+                    <h2>[% article.title %]</h2>
+                    <p>[% article.content %]</p>
+                    <i>posted on [% article.date_posted %] by [% article.posted_by.username %] in [% article.category.category_name %]</i>
+                </li>
+              [% END %]
+          </ol>
+        </div>
+      </div>
+    </div>

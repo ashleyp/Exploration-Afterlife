@@ -1,0 +1,1 @@
+export DBIC_MIGRATION_SCHEMA_CLASS=Exploration::Afterlife::Schema
