@@ -29,9 +29,10 @@ get '/evidence' => sub {
 };
 
 get '/evidence/category/:category' => sub {
-    my $category_name         = params->{category};
     my @categories            = schema->resultset('Category')->all;
-    my $find_category         = schema->resultset('Category')->find( { category_name => $category_name } );
+    my $find_category         = schema->resultset('Category')->find({ 
+            category_name => param('category') 
+    });
     my @articles_for_category = $find_category->articles;
     template 'evidence', {
         articles => \@articles_for_category,
@@ -40,15 +41,13 @@ get '/evidence/category/:category' => sub {
 };
 
 get '/add_article' => sub {
+    my $user_data   = authd;
     my @categories = schema->resultset('Category')->all;
     template 'add_article', { categories => \@categories };
 };
 
 post '/add_article' => sub {
-    #my $user_data   = session('user');
     my $user_data   = authd;
-    use Data::Dumper;
-    print Dumper( $user_data );
     my $add_article = schema->resultset('Article')->create({
             content           => param('content'),
             title             => param('title'),
@@ -61,13 +60,11 @@ post '/add_article' => sub {
 
 
 post '/login' => sub {
-    my $username = param('username');
-    my $password = param('password');
-    my $user_ok  = auth( $username, $password );
+    my $user_ok  = auth( param('username'), param('password') );
     if ( !$user_ok->errors ) {
         redirect '/';
     } else {
-        print "FAILLLURE\n\n\n";
+        redirect '/login?error=true';
     }
 };
 
