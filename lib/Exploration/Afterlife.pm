@@ -14,6 +14,11 @@ get '/login' => sub {
     template 'login';
 };
 
+get '/logout' => sub {
+    session->destroy;
+    template 'logout';
+};
+
 get '/evidence' => sub {
     my @categories            = schema->resultset('Category')->all;
     my @articles              = schema->resultset('Article')->all;
