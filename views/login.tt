@@ -1,16 +1,13 @@
+[% PROCESS header.tt %]
+
 <div id="page">
   <div id="content">
-    <div id="header">
-      <h1>Exploration Afterlife - <a href="/" style="color: black">Home</a> - <a href="/evidence" style="color: black">Evidence</a></h1>
-    </div>
-
     <h2>Login</h2>
     <form method='post'>
       <input type='text' name='username' />
       <input type='password' name='password' />
       <input type='submit' value='login' />
     </form>
-
-    </div>
   </div>
 </div>
+

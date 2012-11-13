@@ -18,7 +18,8 @@
 [% content %]
 
 <div id="footer">
-Footer
+  Footer
 </div>
+
 </body>
 </html>
