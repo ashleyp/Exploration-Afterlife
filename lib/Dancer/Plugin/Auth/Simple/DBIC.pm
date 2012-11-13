@@ -1,14 +1,14 @@
 # ABSTRACT: Dancer::Plugin::Auth::RBAC authentication via SQLite!
 
-package Dancer::Plugin::Auth::RBAC::Credentials::DBIC;
+package Dancer::Plugin::Auth::Simple::DBIC;
 
 BEGIN {
-    $Dancer::Plugin::Auth::RBAC::Credentials::DBIC::VERSION = '1.0';
+    $Dancer::Plugin::Auth::Simple::DBIC::VERSION = '1.0';
 }
 
 use strict;
 use warnings;
-use base qw/Dancer::Plugin::Auth::RBAC::Credentials/;
+use base qw/Dancer::Plugin::Auth::Simple::Credentials/;
 use Dancer::Plugin::DBIC 'schema';
 
 
@@ -16,7 +16,6 @@ sub authorize {
 
     my ( $self, $options, @arguments ) = @_;
     my ( $username, $password ) = @arguments;
-
     if ( $username ) {
         # authorize a new account using supplied credentials
 
@@ -35,6 +34,7 @@ sub authorize {
         if ( $user_data ) {
             my $session_data = {
                 username   => $user_data->username,
+                id    => $user_data->user_id,
                 user_level => $user_data->user_level->user_level_id,
                 error      => [],
             };
@@ -48,9 +48,8 @@ sub authorize {
     else {
 
         # check if current user session is authorized
-
         my $user = $self->credentials;
-        if ( ( $user->{id} || $user->{username} ) && !@{ $user->{error} } ) {
+        if ( $user->{username} && !@{ $user->{error} } ) {
             return $user;
         }
         else {
