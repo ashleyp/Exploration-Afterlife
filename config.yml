@@ -17,7 +17,9 @@ plugins:
 
 session: cookie
 session_cookie_key: 124810h8f120j9
+
 layout: main
+
 # when the charset is set to UTF-8 Dancer will handle for you
 # all the magic of encoding and decoding. You should not care
 # about unicode within your app when this setting is set (recommended).
