@@ -1,6 +1,5 @@
 package Exploration::Afterlife::Schema::Result::Category;
 
-use 5.12.0;
 use base 'DBIx::Class::Core';
 
 __PACKAGE__->table('category');

@@ -1,6 +1,5 @@
 package Exploration::Afterlife::Schema::Result::Users;
 
-use 5.12.0;
 use base qw/DBIx::Class::Core/;
 
 __PACKAGE__->table('users');
@@ -42,6 +41,5 @@ __PACKAGE__->has_many(
     articles => 'Exploration::Afterlife::Schema::Result::Article',
     { 'foreign.posted_by_user_id' => 'self.user_id' }
 );
-
 
 1;

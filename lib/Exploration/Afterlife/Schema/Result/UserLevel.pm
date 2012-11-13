@@ -1,6 +1,5 @@
 package Exploration::Afterlife::Schema::Result::UserLevel;
 
-use 5.12.0;
 use base 'DBIx::Class::Core';
 
 __PACKAGE__->table('user_level');
