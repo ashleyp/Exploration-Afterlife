@@ -7,9 +7,8 @@ appname: "Exploration Afterlife"
 
 # plugins
 plugins:
-  Auth::RBAC:
-    credentials:
-      class: DBIC
+  Auth::Simple:
+    type: DBIC
   DBIC:
     default:
       dsn: dbi:SQLite:dbname=share/exploration-afterlife-schema.db
