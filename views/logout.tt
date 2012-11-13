@@ -1,0 +1,8 @@
+[% PROCESS header.tt %]
+
+<div id="page">
+  <div id="content">
+    <h3>Logged out successfully.</h3>
+    /code redirect.
+  </div>
+</div>
