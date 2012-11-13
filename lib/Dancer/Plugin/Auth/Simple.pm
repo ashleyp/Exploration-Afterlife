@@ -23,20 +23,20 @@ register authd => sub {
             return session('user');
         }
     }
-    return false;
+    redirect '/login';
 };
 
 
 sub new {
     my $class = shift;
     my @credentials = @_;
-    my $class =  __PACKAGE__ . '::' . $settings->{type};
+    my $plugin_class =  __PACKAGE__ . '::' . $settings->{type};
 
     {
         no warnings 'redefine';
-        $class =~ s/::/\//g;
-        require "$class.pm";
-        $class =~ s/\//::/g;
+        $plugin_class =~ s/::/\//g;
+        require "$plugin_class.pm";
+        $plugin_class =~ s/\//::/g;
     }
     
     my $self = {};
@@ -60,7 +60,7 @@ sub new {
     
     session 'user' => $user;
     
-    $class->new->authorize($settings->{credentials}->{options}, @credentials);
+    $plugin_class->new->authorize($settings->{credentials}->{options}, @credentials);
     return $self;
 }
 
