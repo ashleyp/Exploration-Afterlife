@@ -1,0 +1,20 @@
+[% PROCESS header.tt %]
+
+<div id="page">
+  <div id="content">
+    <h2>Add New Article</h2>
+    <form method='post'>
+      <input type='text' name='title' />
+      <input type='text' name='content' />
+      <select name='category'>
+        [% FOREACH category in categories %]
+          <option value='[% category.category_id %]'>
+            [% category.category_name %]
+          </option>
+        [% END %]
+      </select>
+      <input type='submit' value='Add Article' />
+    </form>
+  </div>
+</div>
+
