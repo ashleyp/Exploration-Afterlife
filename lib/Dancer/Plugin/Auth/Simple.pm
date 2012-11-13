@@ -51,7 +51,7 @@ sub new {
     else {
         # initialize user session object
         $user = {
-            user_id       => undef,
+            id       => undef,
             name     => undef,
             username => undef,
             error    => []
