@@ -1,19 +1,23 @@
 package Exploration::Afterlife;
 use Dancer ':syntax';
 use Dancer::Plugin::DBIC 'schema';
+use Dancer::Plugin::Auth::RBAC;
 
 our $VERSION = '0.1';
 
 get '/' => sub {
     my @articles = schema->resultset('Article')->all;
-    template 'index', { route => '/', articles => \@articles };
+    template 'index', { articles => \@articles };
+};
+
+get '/login' => sub {
+    template 'login';
 };
 
 get '/evidence' => sub {
     my @categories            = schema->resultset('Category')->all;
     my @articles              = schema->resultset('Article')->all;
     template 'evidence', {
-        route => '/evidence',
         articles => \@articles,
         categories => \@categories,
     };
@@ -25,7 +29,6 @@ get '/evidence/category/:category' => sub {
     my $find_category         = schema->resultset('Category')->find( { category_name => $category_name } );
     my @articles_for_category = $find_category->articles;
     template 'evidence', {
-        route => "/evidence/category/$category_name",
         articles => \@articles_for_category,
         categories => \@categories,
     };
@@ -34,12 +37,14 @@ get '/evidence/category/:category' => sub {
 post '/login' => sub {
     my $username = param('username');
     my $password = param('password');
-    my $user_ok  = auth_user( $username, $password );
-    if ( $user_ok ) {
-        session username => $username;
-        session user_level => $user_ok->{level_id};
+    my $user_ok  = auth( $username, $password );
+    if ( !$user_ok->errors ) {
+        session username => $user_ok->{username};
+        session user_level => $user_ok->{user_level};
+    } else {
+        print "FAILLLURE\n\n\n";
     }
-    redirect param('route');
+    redirect '/';
 };
 
 true;
