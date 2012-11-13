@@ -1,6 +1,6 @@
 [% 
   SET login_or_logout = "logout";
-  IF !session.user_id;
+  IF !session.user.id;
     login_or_logout = "login";
   END;
 %]
@@ -13,7 +13,7 @@
     <a href="/" style="color: black">Home</a> - 
     <a href="/[% login_or_logout %]" style="color: black">[% login_or_logout | ucfirst %]</a> - 
     <a href="/evidence" style="color: black">Evidence</a>
-    [% IF session.user_id %]
+    [% IF session.user.id %]
       <a href="/add_article" style="color: black">Add Evidence</a>
     [% END %]
   </h1>
