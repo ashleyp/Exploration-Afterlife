@@ -30,14 +30,13 @@ register authd => sub {
 sub new {
     my $class = shift;
     my @credentials = @_;
-    
-    my $credentialsClass =
-    __PACKAGE__ . "::Credentials::" . $settings->{credentials}->{class};
+    my $class =  __PACKAGE__ . '::' . $settings->{type};
+
     {
         no warnings 'redefine';
-        $credentialsClass =~ s/::/\//g;
-        require "$credentialsClass.pm";
-        $credentialsClass =~ s/\//::/g;
+        $class =~ s/::/\//g;
+        require "$class.pm";
+        $class =~ s/\//::/g;
     }
     
     my $self = {};
@@ -52,7 +51,7 @@ sub new {
     else {
         # initialize user session object
         $user = {
-            id       => undef,
+            user_id       => undef,
             name     => undef,
             username => undef,
             error    => []
@@ -61,7 +60,7 @@ sub new {
     
     session 'user' => $user;
     
-    $credentialsClass->new->authorize($settings->{credentials}->{options}, @credentials);
+    $class->new->authorize($settings->{credentials}->{options}, @credentials);
     return $self;
 }
 

@@ -8,9 +8,35 @@ BEGIN {
 
 use strict;
 use warnings;
-use base qw/Dancer::Plugin::Auth::Simple::Credentials/;
-use Dancer::Plugin::DBIC 'schema';
 
+use Dancer::Plugin::DBIC 'schema';
+use Dancer qw/:syntax/;
+
+sub new {
+    my $class = shift;
+    my $self  = {};
+    bless $self, $class;
+    return $self;
+}
+
+sub credentials {
+    my $self = shift;
+    if (@_) {
+        return session 'user' => @_;
+    }
+    else {
+        return session('user');
+    }
+}
+
+sub errors {
+    my ($self, @errors) = @_;
+    my $user = session('user');
+    push @{$user->{error}}, @errors; 
+    #return session 'user' => $user;
+    session 'user' => $user;
+    return @errors;
+}
 
 sub authorize {
 
