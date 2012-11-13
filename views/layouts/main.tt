@@ -15,3 +15,10 @@
 </head>
 <body>
 
+[% content %]
+
+<div id="footer">
+Footer
+</div>
+</body>
+</html>
