@@ -1,7 +1,7 @@
 package Exploration::Afterlife;
 use Dancer ':syntax';
 use Dancer::Plugin::DBIC 'schema';
-use Dancer::Plugin::Auth::RBAC;
+use Dancer::Plugin::Auth::Simple;
 
 our $VERSION = '0.1';
 
@@ -39,17 +39,36 @@ get '/evidence/category/:category' => sub {
     };
 };
 
+get '/add_article' => sub {
+    my @categories = schema->resultset('Category')->all;
+    template 'add_article', { categories => \@categories };
+};
+
+post '/add_article' => sub {
+    #my $user_data   = session('user');
+    my $user_data   = authd;
+    use Data::Dumper;
+    print Dumper( $user_data );
+    my $add_article = schema->resultset('Article')->create({
+            content           => param('content'),
+            title             => param('title'),
+            category_id       => param('category'),
+            date_posted       => time(),
+            posted_by_user_id => $user_data->{id},
+    });
+    redirect '/';
+};
+
+
 post '/login' => sub {
     my $username = param('username');
     my $password = param('password');
     my $user_ok  = auth( $username, $password );
     if ( !$user_ok->errors ) {
-        session username => $user_ok->{username};
-        session user_level => $user_ok->{user_level};
+        redirect '/';
     } else {
         print "FAILLLURE\n\n\n";
     }
-    redirect '/';
 };
 
 true;
