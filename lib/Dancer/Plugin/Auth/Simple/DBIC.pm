@@ -60,7 +60,7 @@ sub authorize {
         if ( $user_data ) {
             my $session_data = {
                 username   => $user_data->username,
-                id    => $user_data->user_id,
+                id         => $user_data->user_id,
                 user_level => $user_data->user_level->user_level_id,
                 error      => [],
             };
