@@ -10,7 +10,24 @@ get '/' => sub {
     template 'index', { articles => \@articles };
 };
 
+get '/add_user' => sub {
+    template 'add_user';
+};
+
+post '/add_user' => sub {
+    # TODO: validate all these fields are what they should be. 
+    my $add_article = schema->resultset('Users')->create({
+        user_level_id     => 1,
+        username          => param('username'),
+        password          => param('password'),
+        firstname         => param('firstname'),
+        lastname          => param('lastname'),
+        email             => param('email'),
+    });
+};
+
 get '/login' => sub {
+    request->path_info('/login');
     template 'login';
 };
 
@@ -20,8 +37,8 @@ get '/logout' => sub {
 };
 
 get '/evidence' => sub {
-    my @categories            = schema->resultset('Category')->all;
-    my @articles              = schema->resultset('Article')->all;
+    my @categories  = schema->resultset('Category')->all;
+    my @articles    = schema->resultset('Article')->all;
     template 'evidence', {
         articles => \@articles,
         categories => \@categories,
@@ -29,8 +46,8 @@ get '/evidence' => sub {
 };
 
 get '/evidence/category/:category' => sub {
-    my @categories            = schema->resultset('Category')->all;
-    my $find_category         = schema->resultset('Category')->find({ 
+    my @categories      = schema->resultset('Category')->all;
+    my $find_category   = schema->resultset('Category')->find({ 
             category_name => param('category') 
     });
     my @articles_for_category = $find_category->articles;
@@ -64,8 +81,22 @@ post '/login' => sub {
     if ( !$user_ok->errors ) {
         redirect param('path') || '/';
     } else {
+        var requested_path => param('path');
         redirect '/login?error=true';
     }
+};
+
+get '/edit_article/:article_id' => sub {
+    my $user_data   = authd;
+    my @categories  = schema->resultset('Category')->all;
+    my $article     = schema->resultset('Article')->find({
+            article_id => param('article_id'),
+    });
+    template 'edit_article', { article => $article, categories => \@categories };
+};
+
+post '/edit_article/:article_id' => sub {
+    print "Testing\n\n\n\n";
 };
 
 true;
