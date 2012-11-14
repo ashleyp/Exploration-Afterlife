@@ -1,0 +1,22 @@
+[% PROCESS header.tt %]
+
+<div id="page">
+  <div id="content">
+    <h2>Edit Article</h2>
+    <form method='post'>
+      <input type='text' name='title' value='[% article.title %]'/>
+      <input type='text' name='content' value='[% article.content %]' />
+      <select name='category'>
+        [% FOREACH category in categories %]
+          <option value='[% category.category_id %]'
+                  [% IF article.category_id == category.category_id %]selected='selected'[% END %]>
+
+            [% category.category_name %]
+          </option>
+        [% END %]
+      </select>
+      <input type='submit' value='Save Changes' />
+    </form>
+  </div>
+</div>
+
