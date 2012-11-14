@@ -23,7 +23,8 @@ register authd => sub {
             return session('user');
         }
     }
-    redirect '/login';
+    var requested_path => request->path_info;
+    forward '/login';
 };
 
 
