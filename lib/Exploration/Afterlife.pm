@@ -42,7 +42,7 @@ get '/evidence/category/:category' => sub {
 
 get '/add_article' => sub {
     my $user_data   = authd;
-    my @categories = schema->resultset('Category')->all;
+    my @categories  = schema->resultset('Category')->all;
     template 'add_article', { categories => \@categories };
 };
 
@@ -62,7 +62,7 @@ post '/add_article' => sub {
 post '/login' => sub {
     my $user_ok  = auth( param('username'), param('password') );
     if ( !$user_ok->errors ) {
-        redirect '/';
+        redirect param('path') || '/';
     } else {
         redirect '/login?error=true';
     }
