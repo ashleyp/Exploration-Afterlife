@@ -3,7 +3,7 @@
 <div id="page">
   <div id="content">
     <h2>Login</h2>
-    <form method='post'>
+    <form method='post' action='/login'>
       <input type='hidden' name='path' value='[% vars.requested_path %]' />
       <input type='text' name='username' />
       <input type='password' name='password' />

@@ -18,7 +18,8 @@
   <ol>          
     [% FOREACH article IN articles %]
       <li>
-        <h2>[% article.title %]</h2>
+        <h2 style="display: inline-block">[% article.title %]</h2>
+        <h5 style="display: inline-block"><a href="/edit_article/[% article.article_id %]">edit</a></h5>
         <p>[% article.content %]</p>
         <i>posted on [% article.date_posted %] by [% article.posted_by.username %] in [% article.category.category_name %]</i>
       </li>
