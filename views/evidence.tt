@@ -1,20 +1,20 @@
 [% PROCESS header.tt %]
 
 
-<div id="page">
-  <div id="sidebar">
-    <ul id="sidebar-items">
-      <li>
-        <h3>Categories</h3>
-        <ul class="links">
-          [% FOREACH category in categories %]
-            [% SET category_name = category.category_name %]
-            <li><a href="/evidence/category/[% category_name %]">[% category_name %]</a></li>
-          [% END %]
-        </ul>
-      </li>
-  </div>
-  <div id="content">
+<div class="container-fluid">
+  <div class="row-fluid">
+      <div class="span3">
+          <div class="well sidebar-nav-fixed">
+            <ul class="nav nav-list">
+            <li class="nav-header">Categories</li>
+              [% FOREACH category in categories %]
+                [% SET category_name = category.category_name %]
+                <li><a href="/evidence/category/[% category_name %]">[% category_name %]</a></li>
+              [% END %]
+          </li>
+          </div>
+      </div>
+  <div class="span9 span-fixed-sidebar">
   <ol>          
     [% FOREACH article IN articles %]
       <li>
@@ -22,8 +22,11 @@
         <h5 style="display: inline-block"><a href="/edit_article/[% article.article_id %]">edit</a></h5>
         <p>[% article.content %]</p>
         <i>posted on [% article.date_posted %] by [% article.posted_by.username %] in [% article.category.category_name %]</i>
+        <h5 style="display: inline-block"><a href="#/">show comments</a></h5>
       </li>
     [% END %]
   </ol>
+  [% PROCESS footer.tt %]
+  </div>
   </div>
 </div>

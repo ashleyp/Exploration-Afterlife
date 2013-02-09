@@ -1,0 +1,9 @@
+<hr />
+<footer id="footer">
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <div class="links">
+        <a href="#">Testing URL</a>
+    </div>
+    Made by ashleyp Contact him <a href="mailto:irashp@gmail.com">irashp@gmail.com</a>.<br>
+    Blah blah footer here.
+</footer>

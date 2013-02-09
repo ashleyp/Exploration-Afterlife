@@ -1,16 +1,17 @@
 [% PROCESS header.tt %]
 
-<div id="page">
-  <div id="content">
-    <h2>Add New Article</h2>
+<div id="container">
     <form method='post'>
+    <fieldset>
+    <legend>Add new user</legend>
       <input type='text' name='username' />
       <input type='text' name='password' />
       <input type='text' name='firstname' />
       <input type='text' name='lastname' />
       <input type='text' name='email' />
       <input type='submit' value='Add Article' />
+      </fieldset>
     </form>
-  </div>
 </div>
 
+[% PROCESS footer.tt %]

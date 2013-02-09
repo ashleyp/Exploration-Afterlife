@@ -1,10 +1,11 @@
 [% PROCESS header.tt %]
 
-<div id="page">
-  <div id="content">
+<div class="container">
+    <p>
     Home page!
-    [% IF session.user %]
+    [% IF session.user.id %]
       <h3>Logged in as [% session.user.username %] </h3>
     [% END %]
-  </div>
+    </p>
+    [% PROCESS footer.tt %]
 </div>

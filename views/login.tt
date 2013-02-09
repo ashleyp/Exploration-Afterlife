@@ -1,14 +1,17 @@
 [% PROCESS header.tt %]
 
-<div id="page">
-  <div id="content">
-    <h2>Login</h2>
+<div class="container">
     <form method='post' action='/login'>
+    <fieldset>
+    <legend>Login</legend>
       <input type='hidden' name='path' value='[% vars.requested_path %]' />
+      <label for='username'>Username:</label>
       <input type='text' name='username' />
+      <label for='password'>Password:</label>
       <input type='password' name='password' />
       <input type='submit' value='login' />
+    </fieldset>
     </form>
-  </div>
+    [% PROCESS footer.tt %]
 </div>
 

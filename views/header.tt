@@ -7,14 +7,17 @@
       
 
 
-<div id="header">
-  <h1>
-    Exploration Afterlife - 
-    <a href="/" style="color: black">Home</a> - 
-    <a href="/[% login_or_logout %]" style="color: black">[% login_or_logout | ucfirst %]</a> - 
-    <a href="/evidence" style="color: black">Evidence</a>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+   <a class="brand" href="../">Exploration Afterlife</a>
+     <ul class="nav" id="main-menu-left">
+       <li><a href="/[% login_or_logout %]">[% login_or_logout | ucfirst %]</a></li>
+       <li><a href="/evidence">Evidence</a></li>
     [% IF session.user.id %]
-      <a href="/add_article" style="color: black">Add Evidence</a>
+       <li><a href="/add_article">Add Evidence</a></li>
     [% END %]
-  </h1>
+     </ul>
+    </div>
+  </div>
 </div>
