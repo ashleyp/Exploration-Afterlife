@@ -22,6 +22,8 @@
                <li><a href="/add_location">Add Location</a></li>
                <li><a href="/add_user">Add User</a></li>
                <li class="divider"></li>
+               <li><a href="/category">New Category</a></li>
+               <li class="divider"></li>
                <li><a href="/logout">Logout</a></li>
             </ul>
           </li>
