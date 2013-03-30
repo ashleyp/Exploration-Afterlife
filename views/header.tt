@@ -12,10 +12,23 @@
     <div class="container">
    <a class="brand" href="../">Exploration Afterlife</a>
      <ul class="nav" id="main-menu-left">
-       <li><a href="/[% login_or_logout %]">[% login_or_logout | ucfirst %]</a></li>
        <li><a href="/evidence">Evidence</a></li>
+       <li><a href="/locations">Locations</a></li>
     [% IF session.user.id %]
-       <li><a href="/add_article">Add Evidence</a></li>
+       <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+               <li><a href="/add_article">Add Evidence</a></li>
+               <li><a href="/add_location">Add Location</a></li>
+               <li><a href="/add_user">Add User</a></li>
+               <li class="divider"></li>
+               <li><a href="/logout">Logout</a></li>
+            </ul>
+          </li>
+    [% ELSE %]
+       <ul class="nav pull-right">
+       <li><a href="#">Login</a></li>
+       </ul>
     [% END %]
      </ul>
     </div>
