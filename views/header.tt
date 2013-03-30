@@ -29,10 +29,6 @@
                <li><a href="/logout">Logout</a></li>
             </ul>
           </li>
-    [% ELSE %]
-       <ul class="nav pull-right">
-       <li><a href="#">Login</a></li>
-       </ul>
     [% END %]
      </ul>
     </div>
