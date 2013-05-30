@@ -2,16 +2,20 @@ package Dancer2::Plugin::DBIC::Auth;
 use base 'Dancer2::Plugin::DBIC';
 
 use Dancer2::Plugin;
+use Dancer::Plugin::Passphrase;
 
 register authed => sub {
-  my $dsl     = shift;
+  my ( $dsl, @args ) = plugin_args(@_);
+
   my $app     = $dsl->app;
   my $conf    = plugin_setting();
   my $user    = $app->session( $conf->{session_var} );
+
   if ( $user ) {
       return $user;
   } else {
-      return $app->context->redirect( $conf->{login_route} );
+      return redirect uri_for( $conf->{login_route},
+          { path => $app->context->request->path });
   }
 };
 
@@ -22,10 +26,9 @@ register auth => sub {
 
   my $user = $dsl->resultset( $conf->{user_table} )->find({
     username => $username,
-    password => $password,
   });
 
-  if ( $user ) {
+  if ( passphrase( $password )->matches( $user->password ) ) {
       my $session = $dsl->app->session;
       my $user_data = {
           username   => $user->username,
@@ -34,7 +37,7 @@ register auth => sub {
       $session->write($conf->{session_var} => $user_data);
       return $user_data;
   } else {
-      return undef;
+      return;
   }
 };
 

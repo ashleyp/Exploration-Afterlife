@@ -1,7 +1,10 @@
 package Exploration::Afterlife;
 use Dancer2;
+
 use Dancer2::Plugin::DBIC qw/rset/;
 use Dancer2::Plugin::DBIC::Auth;
+use Dancer::Plugin::Passphrase;
+
 
 our $VERSION = '0.1';
 
@@ -11,15 +14,15 @@ get '/' => sub {
 };
 
 get '/login' => sub {
-    template 'login';
+    template 'login' => { path => param('path') };
 };
 
 post '/login' => sub {
-    my $user_ok = auth( param('username'), param('password') );
-    if( $user_ok ) {
+    my $user_ok  = auth( param('username'), param('password') );
+    if ( $user_ok ) {
         redirect param('path') || '/';
     } else {
-        var requested_path => param('path');
+        var path => param('path');
         redirect '/login?error=true';
     }
 };

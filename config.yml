@@ -7,6 +7,10 @@ appname: "Exploration Afterlife"
 
 # plugins
 plugins:
+  Passphrase:
+    default: Bcrypt
+    Bcrypt:
+      cost: 8
   DBIC::Auth:
     user_table: Users
     login_route: /login
