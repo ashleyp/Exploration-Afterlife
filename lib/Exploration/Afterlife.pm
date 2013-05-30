@@ -1,6 +1,6 @@
 package Exploration::Afterlife;
 use Dancer2;
-use Dancer2::Plugin::DBIC qw/schema rset/;
+use Dancer2::Plugin::DBIC qw/rset/;
 use Dancer2::Plugin::DBIC::Auth;
 
 our $VERSION = '0.1';
