@@ -1,22 +1,42 @@
 package Exploration::Afterlife;
-use Dancer ':syntax';
-use Dancer::Plugin::DBIC 'schema';
-use Dancer::Plugin::Auth::Simple;
+use Dancer2;
+use Dancer2::Plugin::DBIC qw/schema rset/;
+use Dancer2::Plugin::DBIC::Auth;
 
 our $VERSION = '0.1';
 
 get '/' => sub {
-    my @articles = schema->resultset('Article')->all;
+    my @articles = rset('Article')->all;
     template index => { articles => \@articles };
 };
 
+get '/login' => sub {
+    template 'login';
+};
+
+post '/login' => sub {
+    my $user_ok = auth( param('username'), param('password') );
+    if( $user_ok ) {
+        redirect param('path') || '/';
+    } else {
+        var requested_path => param('path');
+        redirect '/login?error=true';
+    }
+};
+
+get '/logout' => sub {
+    context->destroy_session;
+    template 'logout';
+};
+
 get '/add_user' => sub {
+    my $user_data = authed;
     template 'add_user';
 };
 
 post '/add_user' => sub {
-    # TODO: validate all these fields are what they should be.
-    my $add_article = schema->resultset('Users')->create(
+    my $user_data = authed;
+    my $add_article = rset('Users')->create(
         {
             user_level_id => 1,
             username      => param('username'),
@@ -28,19 +48,9 @@ post '/add_user' => sub {
     );
 };
 
-get '/login' => sub {
-    request->path_info('/login');
-    template 'login';
-};
-
-get '/logout' => sub {
-    session->destroy;
-    template 'logout';
-};
-
 get '/evidence' => sub {
-    my @categories = schema->resultset('Category')->all;
-    my @articles   = schema->resultset('Article')->all;
+    my @categories = rset('Category')->all;
+    my @articles   = rset('Article')->all;
     template 'evidence',
       {
         articles   => \@articles,
@@ -49,9 +59,8 @@ get '/evidence' => sub {
 };
 
 get '/evidence/category/:category' => sub {
-    my @categories = schema->resultset('Category')->all;
-    my $find_category
-      = schema->resultset('Category')->find( { category_name => param('category') } );
+    my @categories    = rset('Category')->all;
+    my $find_category = rset('Category')->find({ category_name => param('category') });
     my @articles_for_category = $find_category->articles;
     template 'evidence',
       {
@@ -61,14 +70,14 @@ get '/evidence/category/:category' => sub {
 };
 
 get '/add_article' => sub {
-    my $user_data  = authd;
-    my @categories = schema->resultset('Category')->all;
+    my $user_data = authed;
+    my @categories = rset('Category')->all;
     template add_article => { categories => \@categories };
 };
 
 post '/add_article' => sub {
-    my $user_data   = authd;
-    my $add_article = schema->resultset('Article')->create(
+    my $user_data = authed;
+    my $add_article = rset('Article')->create(
         {
             content           => param('content'),
             title             => param('title'),
@@ -80,28 +89,16 @@ post '/add_article' => sub {
     redirect '/';
 };
 
-
-post '/login' => sub {
-    my $user_ok = auth( param('username'), param('password') );
-    if( !$user_ok->errors ) {
-        redirect param('path') || '/';
-    }
-    else {
-        var requested_path => param('path');
-        redirect '/login?error=true';
-    }
-};
-
 get '/edit_article/:article_id' => sub {
-    my $user_data  = authd;
-    my @categories = schema->resultset('Category')->all;
-    my $article    = schema->resultset('Article')->find({ article_id => param('article_id') });
+    my $user_data = authed;
+    my @categories = rset('Category')->all;
+    my $article    = rset('Article')->find({ article_id => param('article_id') });
     template edit_article => { article => $article, categories => \@categories };
 };
 
 post '/edit_article/:article_id' => sub {
-    my $user_data  = authd;
-    my $article    = schema->resultset('Article')->find( { article_id => param('article_id'), } );
+    my $user_data = authed;
+    my $article    = rset('Article')->find({ article_id => param('article_id') });
     $article->update(
         {
             content     => param('content'),

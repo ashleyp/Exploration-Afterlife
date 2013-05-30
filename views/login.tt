@@ -1,5 +1,7 @@
 [% PROCESS header.tt %]
 
+[% USE Dumper; Dumper.dump( path ) %]
+
 <div class="container">
     <form method='post' action='/login'>
     <fieldset>

@@ -7,15 +7,21 @@ appname: "Exploration Afterlife"
 
 # plugins
 plugins:
-  Auth::Simple:
-    type: DBIC
+  DBIC::Auth:
+    user_table: Users
+    login_route: /login
+    session_var: user
   DBIC:
     default:
       dsn: dbi:SQLite:dbname=share/exploration-afterlife-schema.db
       schema_class: Exploration::Afterlife::Schema
 
-session: cookie
-session_cookie_key: 124810h8f120j9
+session: Cookie
+engines:
+  session:
+    Cookie:
+      secret_key: aodsfijasodifja9823
+      default_duration: 604800
 
 layout: main
 
@@ -23,11 +29,4 @@ layout: main
 # all the magic of encoding and decoding. You should not care
 # about unicode within your app when this setting is set (recommended).
 charset: "UTF-8"
-
 template: template_toolkit
-engines:
-  template_toolkit:
-    encoding: utf8
-    start_tag: '[%'
-    end_tag: '%]'
-
