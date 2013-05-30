@@ -11,7 +11,6 @@ register authed => sub {
   if ( $user ) {
       return $user;
   } else {
-      use Data::Dumper;
       return $app->context->redirect( $conf->{login_route} );
   }
 };
